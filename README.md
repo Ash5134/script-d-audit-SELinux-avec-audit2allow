@@ -10,7 +10,11 @@ Ce projet propose un script Bash qui **analyse les refus SELinux** liés à des 
 - 🔍 Analyse des refus SELinux via `ausearch`  
 - 🖊️ Génération de modules `.pp` locaux pour assouplir les permissions  
 - 📑 Rapport centralisé (`rapport.log`) clair et lisible  
-- 🎨 Affichage coloré (rouge, vert, jaune, bleu) pour plus de confort en console  
+- 🎨 **Affichage coloré** pour plus de clarté :
+  - 🔴 **Rouge** : refus SELinux détectés  
+  - 🟢 **Vert** : aucun refus détecté  
+  - 🟡 **Jaune** : génération de règles locales  
+  - 🔵 **Bleu** : étapes et titres importants  
 
 ---
 
@@ -28,7 +32,7 @@ Activez ensuite **SELinux** en mode `enforcing` ou `permissive` selon vos besoin
 
 ## 🚀 Utilisation
 
-1. Préparez un fichier `policy.txt` :
+1. Préparez un fichier `policy.txt` : (par exemple)
 
    ```
    httpd:/var/www/html
@@ -56,6 +60,23 @@ Activez ensuite **SELinux** en mode `enforcing` ou `permissive` selon vos besoin
 
    Analyse terminée. Rapport complet enregistré dans rapport.log
    ```
+
+---
+
+## 📊 Schéma du fonctionnement
+
+```
++-------------+       +-------------+       +-------------+       +-------------+
+|  Processus  |  -->  |   Refus     |  -->  |  audit2allow |  -->  |  Règle .pp  |
+|  (policy)   |       |   SELinux   |       |  Génération  |       |  locale     |
++-------------+       +-------------+       +-------------+       +-------------+
+                              |
+                              v
+                        +-------------+
+                        |  Rapport    |
+                        | rapport.log |
+                        +-------------+
+```
 
 ---
 
